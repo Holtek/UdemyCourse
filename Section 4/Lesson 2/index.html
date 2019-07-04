@@ -1,0 +1,22 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Closer look at objects</h1>
+  <p>*Every JS object has prototype property which makes inheritance possible in JS</p>
+  <p>The prototype property of an object is where we put methods and properties that we want other objects to inherit
+  </p>
+  <p>The constructor prototype property is NOT the prototyle on the constructor itself, it's the prototype of ALL
+    instances that are created through it</p>
+  <p>When a certain method (or property) is called, the search starts in the object itself, and if it cannot be found ,
+    the search moves on the object's prototype. This continues until the metod is found: prototype chain. </p>
+  <script src="./main.js"></script>
+</body>
+
+</html>

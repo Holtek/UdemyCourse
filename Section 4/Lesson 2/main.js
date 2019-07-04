@@ -1,0 +1,1 @@
+// Objects are everything in JS
