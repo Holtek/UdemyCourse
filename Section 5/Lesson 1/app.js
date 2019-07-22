@@ -90,11 +90,15 @@ var UIController = (function () {
 
   var DOMstrings = {
     inputType: '.add__type',
-    inputDesc: '.add__description',
+    inputDescription: '.add__description',
     inputValue: '.add__value',
     inputBtn: '.add__btn',
     incomeContainer: '.income__list',
     expensesContainer: '.expenses__list',
+    budgetLabel: '.budget__value',
+    incomeLabel: '.budget__income--value',
+    expensesLabel: '.budget__expenses--value',
+    percentageLabel: '.budget__expenses--percentage',
 
   }
 
@@ -102,7 +106,7 @@ var UIController = (function () {
     getInput: function () {
       return {
         type: document.querySelector(DOMstrings.inputType).value, //will be either or inc or exp
-        description: document.querySelector(DOMstrings.inputDesc).value,
+        description: document.querySelector(DOMstrings.inputDescription).value,
         value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
       }
     },
@@ -135,16 +139,29 @@ var UIController = (function () {
 
     },
     clearFields: function () {
-      var fields, fieldsArray;
-      fields = document.querySelectorAll(DOMstrings.inputDesc + ', ' + DOMstrings.inputValue);
+      var fields, fieldsArr;
 
-      fieldsArray = Array.prototype.slice.call(fields)
-
-      fieldsArray.forEach(function (current, index, array) {
+      fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+      fieldsArr = Array.prototype.slice.call(fields);
+      fieldsArr.forEach(function (current, index, array) {
         current.value = "";
       });
-      fieldsArray[0].focus();
+      fieldsArr[0].focus();
+    },
 
+
+
+    displayBudget: function (obj) {
+      document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
+      document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
+      document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+      document.querySelector(DOMstrings.percentageLabel).textContent = obj.precentage;
+
+      if (obj.precentage > 0) {
+        document.querySelector(DOMstrings.percentageLabel).textContent = obj.precentage + '%';
+      } else {
+        document.querySelector(DOMstrings.percentageLabel).textContent = obj.precentage + '---';
+      }
     },
 
     getDOMStrings: function () {
@@ -176,7 +193,7 @@ var controller = (function (budgetCtrl, UICtrl) {
     var budget = budgetController.getBudget();
 
     //3.display the budget
-    console.log(budget)
+    UIController.displayBudget(budget);
   }
 
   var ctrlAddItem = function () {
@@ -203,6 +220,12 @@ var controller = (function (budgetCtrl, UICtrl) {
   return {
     init: function () {
       console.log('application has started')
+      UIController.displayBudget({
+        budget: 0,
+        totalInc: 0,
+        totalExp: 0,
+        precentage: -1
+      });
       setupEventListeners();
     }
   }
